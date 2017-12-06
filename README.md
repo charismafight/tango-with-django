@@ -1,0 +1,2 @@
+As the url [official Django Tutorials](https://docs.djangoproject.com/en/1.7/intro/tutorial01/)'s limitation,add this
+project to practise more.The Main point is to discover and solve problems when using django.
