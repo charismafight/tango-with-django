@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Rango</title>
+    <link rel="stylesheet" href="{% static "rango/css/base.css" %}">
+    <script src="{% static "rango/js/jquery.js" %}"></script>
 </head>
 <body>
-Rango says: Hello world! <strong>{{boldmessage}}</strong>
+Rango says: Hello world! <strong>{{ boldmessage }}</strong>
 <br/> <a href='/rango/about'>About</a>
-
+<img src="{% static "rango/images/rango.jpg" %}" alt="Picture of Rango"/>
 </body>
 </html>
