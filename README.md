@@ -1,6 +1,6 @@
 # This app calls Rango
 
-As the [official Django Tutorials](https://docs.djangoproject.com/en/1.7/intro/tutorial01/)'s limitation,add this
+As the [official Django Tutorials](https://docs.djangoproject.com/en/1.7/intro/tutorial01/) has it's limitation,add this
 project to practise more.The Main point is to discover and solve problems when using django.Then deep in
 django's framework implement.
 
