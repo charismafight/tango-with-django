@@ -21,3 +21,6 @@ Technologies and Services
 - [PythonAnywhere]( https://www.pythonanywhere.com)
 
 
+#### Dependencies
+[PIL](http://pythonware.com/products/pil/)
+
