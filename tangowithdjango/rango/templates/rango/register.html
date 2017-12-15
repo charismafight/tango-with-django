@@ -5,17 +5,17 @@
     <title>rango</title>
 </head>
 <body>
-<h1>Register</h1>
-<form method="post" action="rango/register/">
-    {% csrf_token %}
-    <ul>
-        {% for v in user.visible_fields %}
-            {{ v.errors }}
-            {{ v.help_text }}
-            {{ v }}
-        {% endfor %}
-    </ul>
-</form>
-<input type="submit" name="submit" value="Register">
+<h1>Register with rango</h1>
+{% if registered %}
+    Rango says: <strong>thank you for registering</strong>
+    <a href="/rango/">Return to the homepage.</a><br/>
+{% else %}
+    <form method="post" action="/rango/register/" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ user_form.as_ul }}
+        {{ user_profile_form.as_ul }}
+        <input type="submit" name="submit" value="Register">
+    </form>
+{% endif %}
 </body>
 </html>

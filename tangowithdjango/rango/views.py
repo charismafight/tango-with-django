@@ -1,3 +1,5 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 
@@ -73,9 +75,57 @@ def add_page(request, category_name_slug):
 def regiter(request):
     registered = False
     if request.method == 'POST':
-        pass
+        user_form = UserForm(request.POST)
+        user_profile_form = UserProfileForm(request.POST)
+
+        if user_form.is_valid() and user_profile_form.is_valid():
+            user = user_form.save()
+            # set password by set_password func cause it's a hash func
+            user.set_password(user.password)
+            user.save()
+
+            user_profile = user_profile_form.save(commit=False)
+            user_profile.user = user
+
+            # dealing with the picture file
+            if 'picture' in request.FILES:
+                user_profile.picture = request.FILES['picture']
+            user_profile.save()
+
+            registered = True
     else:
         user_form = UserForm()
         user_profile_form = UserProfileForm()
-        context = {'user_form': user_form, 'user_profile_form': user_profile_form, 'registered': registered}
-        return render(request, 'rango/register.html', context)
+    # when a new or modify page was setup,we should consider both post(submit page) and get(init page)
+    # generally speaking,the keys of the context for the page may be the same when post and get
+    # just different in content
+    return render(request, 'rango/register.html',
+                  {'user_form': user_form, 'user_profile_form': user_profile_form, 'registered': registered})
+
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        userpwd = request.POST.get('userpwd')
+
+        user = authenticate(username=username, password=userpwd)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/rango/')
+        else:
+            print('error username or password,please try again')
+            return HttpResponse('error username or password,please try again')
+    else:
+        return render(request, 'rango/login.html')
+
+
+@login_required
+def restrict(request):
+    return HttpResponse("you're logged in")
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/rango/')

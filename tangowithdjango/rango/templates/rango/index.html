@@ -1,32 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Rango</title>
-</head>
-<body>
-<h1>Categories</h1>
-<br>
-{% if categories %}
-    <ul>
-        {% for c in categories %}
-            <li><a href="/rango/category/{{ c.slug }}">{{ c.name }}</a>
-                <input type="button" title="like it" value="like it"></li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <strong>no categories</strong>
-{% endif %}
-<h1>Pages</h1>
-{% if pages %}
-    <ul>
-        {% for p in pages %}
-            <li>{{ p.title }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <h1>There are No Pages</h1>
-{% endif %}
-<br/> <a href='/rango/add_category/'>Add a category</a>
-</body>
-</html>
+{% extends 'rango/base.html' %}
+
+{% block block_title %} Category {% endblock %}
+{% block body_block %}
+    <h1>Categories</h1>
+    <br>
+    {% if categories %}
+        <ul>
+            {% for c in categories %}
+                <li><a href="/rango/category/{{ c.slug }}">{{ c.name }}</a>
+                    <input type="button" title="like it" value="like it"></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>no categories</strong>
+    {% endif %}
+    <h1>Pages</h1>
+    {% if pages %}
+        <ul>
+            {% for p in pages %}
+                <li>{{ p.title }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h1>There are No Pages</h1>
+    {% endif %}
+{% endblock %}
