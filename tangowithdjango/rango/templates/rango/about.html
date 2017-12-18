@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'rango/base.html' %}
 {% load static %}
-<head>
-    <meta charset="UTF-8">
-    <title>About</title>
-</head>
-<body>
-<h1>this is the about page.</h1>
-<h2>rango says : enjoy it.</h2>
-<img src="{% static "rango/images/girls.jpg" %}" height="auto" width="auto">
-</body>
-</html>
+{% block block_title %}
+    About
+{% endblock %}
+
+{% block block_body %}
+    <h1>this is the about page.</h1>
+    <h2>rango says : enjoy it.</h2>
+    <img src="{% static "rango/images/girls.jpg" %}" height="auto" width="auto">
+{% endblock %}

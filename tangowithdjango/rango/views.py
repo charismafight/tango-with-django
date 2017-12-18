@@ -122,7 +122,7 @@ def user_login(request):
 
 @login_required
 def restrict(request):
-    return HttpResponse("you're logged in")
+    return render(request, 'rango/restricted.html', {})
 
 
 @login_required

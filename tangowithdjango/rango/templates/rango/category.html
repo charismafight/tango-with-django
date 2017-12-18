@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Category</title>
-</head>
-<body>
-<ul>
-    {% for p in pages %}
-        <li><a href="{{ p.url }}">{{ p.title }}</a></li>
-    {% endfor %}
-</ul>
-<br/>
-<a href="/rango/category/{{ category.slug }}/add_page">Add page</a>
-</body>
-</html>
+{% extends 'rango/base.html' %}
+{% block block_title %}
+    Category
+{% endblock %}
+{% block block_body %}
+    <ul>
+        {% for p in pages %}
+            <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+        {% endfor %}
+    </ul>
+    <br/>
+    <a href="{% url 'rango:add_page' category.slug %}">Add page</a>
+{% endblock %}
