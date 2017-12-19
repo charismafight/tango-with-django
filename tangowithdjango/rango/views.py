@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_list_or_404, get_object_or_404
@@ -9,10 +11,29 @@ from .models import *
 
 # Create your views here.
 def index(request):
+    # request.session.set_test_cookie()
     qs = Category.objects.order_by('-likes')[:5]
     pages = Page.objects.order_by('-views')[:5]
     context = {'categories': qs, 'pages': pages}
-    return HttpResponse(render(request, 'rango/index.html', context))
+
+    visits = int(request.COOKIES.get('visits', 1))
+    reset_last_visit_time = False
+
+    if 'last_visit' in request.COOKIES:
+        last_visit = request.COOKIES['last_visit']
+        last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
+        if (datetime.now() - last_visit_time).seconds > 5:
+            visits += 1
+            reset_last_visit_time = True
+    else:
+        reset_last_visit_time = True
+
+    context['visits'] = visits
+    response = render(request, 'rango/index.html', context)
+    if reset_last_visit_time:
+        response.set_cookie('last_visit', datetime.now())
+        response.set_cookie('visits', visits)
+    return response
 
 
 def about(request):
@@ -73,6 +94,10 @@ def add_page(request, category_name_slug):
 
 
 def regiter(request):
+    # if request.session.test_cookie_worked():
+    #     print('cookie worked')
+    # else:
+    #     print('cookie does not worked')
     registered = False
     if request.method == 'POST':
         user_form = UserForm(request.POST)
