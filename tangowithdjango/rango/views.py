@@ -5,36 +5,19 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 
+from .utils import record_visits
 from .forms import CategoryForm, PageForm, UserProfileForm, UserForm
 from .models import *
 
 
 # Create your views here.
+@record_visits
 def index(request):
     # request.session.set_test_cookie()
     qs = Category.objects.order_by('-likes')[:5]
     pages = Page.objects.order_by('-views')[:5]
     context = {'categories': qs, 'pages': pages}
 
-    visits = request.session.get('visits')
-    if not visits:
-        visits = 1
-    reset_last_visit_time = False
-    last_visit = request.session.get('last_visit')
-
-    if last_visit:
-        last_visit_time = datetime.strptime(last_visit[:-7], "%Y-%m-%d %H:%M:%S")
-        if (datetime.now() - last_visit_time).seconds > 0:
-            visits += 1
-            reset_last_visit_time = True
-    else:
-        reset_last_visit_time = True
-
-    if reset_last_visit_time:
-        request.session['last_visit'] = str(datetime.now())
-        request.session['visits'] = visits
-
-    context['visits'] = visits
     response = render(request, 'rango/index.html', context)
     return response
 
