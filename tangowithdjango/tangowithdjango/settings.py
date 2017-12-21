@@ -31,12 +31,18 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'rango.apps.RangoConfig',
     'django.contrib.admin',
+    'registration',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+REGISTRATION_OPEN = True  # If True, users can register
+ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window; you may, of course, use a different value.
+REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
+LOGIN_REDIRECT_URL = '/rango/'  # The page you want users to arrive at after they successful log in
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -115,4 +121,4 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Absolute path to the media directory
-LOGIN_URL = '/rango/login/'
+LOGIN_URL = '/accounts/login/'

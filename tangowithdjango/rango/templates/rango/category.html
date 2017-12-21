@@ -1,8 +1,8 @@
-{% extends 'rango/base.html' %}
-{% block block_title %}
+{% extends 'base.html' %}
+{% block title_block %}
     Category
 {% endblock %}
-{% block block_body %}
+{% block body_block %}
     <ul>
         {% for p in pages %}
             <li><a href="{{ p.url }}">{{ p.title }}</a></li>
