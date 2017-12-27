@@ -14,4 +14,5 @@ urlpatterns = [
                   url(r'^login/$', views.user_login, name='login'),
                   url(r'^restrict/$', views.restrict, name='restrict'),
                   url(r'^user_logout/$', views.user_logout, name='user_logout'),
+                  url(r'^goto/', views.track_url, name='goto'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

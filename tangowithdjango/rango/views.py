@@ -27,12 +27,18 @@ def about(request):
 
 
 def category(request, category_name):
-    # add visits of category
-    current_category = Category.objects.get(slug=category_name)
-    if current_category:
-        current_category.visits += 1
-        current_category.save()
-    pages = Page.objects.filter(category=current_category)
+    if category_name:
+        current_category = Category.objects.get(slug=category_name)
+        # add visits of category
+        if current_category:
+            current_category.visits += 1
+            current_category.save()
+
+    if request.method == "POST":
+        pages = Page.objects.filter(category=current_category, title__contains=request.POST.get('query')).order_by(
+            '-views')
+    else:
+        pages = Page.objects.filter(category=current_category).order_by('-views')
     return HttpResponse(
         render(request, 'rango/category.html', {'pages': pages, 'category': current_category}))
 
@@ -140,3 +146,14 @@ def restrict(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/rango/')
+
+
+def track_url(request):
+    if request.method == "GET" and "page_id" in request.GET:
+        if request.GET["page_id"]:
+            p = Page.objects.get(pk=request.GET["page_id"])
+            p.views += 1
+            p.save()
+            return HttpResponseRedirect(p.url)
+
+    return HttpResponseRedirect('rango/')

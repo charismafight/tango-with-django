@@ -3,9 +3,17 @@
     Category
 {% endblock %}
 {% block body_block %}
+    <form class="form-inline mt-2 mt-md-0" id="user_form" method="post"
+          action="{% url 'rango:category' category.slug %}">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="text" size="50" placeholder="Search" aria-label="Search"
+               value="{{ query }}"
+               id="query" name="query">
+        <button class="btn btn-outline-success my-2 my-sm-0" name="submit" type="submit">Search</button>
+    </form>
     <ul>
         {% for p in pages %}
-            <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+            <li><a href="{% url 'rango:goto' %}?page_id={{ p.id }}">{{ p.title }}</a></li>
         {% endfor %}
     </ul>
     <br/>
