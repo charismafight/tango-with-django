@@ -157,3 +157,19 @@ def track_url(request):
             return HttpResponseRedirect(p.url)
 
     return HttpResponseRedirect('rango/')
+
+
+@login_required
+def like_category(request):
+    current_category = None
+    if request.method == "GET":
+        print("get!")
+        if request.GET.get("category_id"):
+            print(request.GET.get("category_id"))
+            current_category = Category.objects.get(pk=int(request.GET.get("category_id")))
+            current_category.likes += 1
+            current_category.save()
+    if current_category:
+        return HttpResponse(current_category.likes)
+    else:
+        return HttpResponse("ERROR")
