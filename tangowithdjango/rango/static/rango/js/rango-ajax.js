@@ -4,4 +4,4 @@ $("#like").click(function () {
         $("#like_count").html(data);
         $("#like").hide();
     })
-})
+});

@@ -22,5 +22,5 @@ Technologies and Services
 
 
 #### Dependencies
-[PIL](http://pythonware.com/products/pil/)
-
+- [PIL](http://pythonware.com/products/pil/)
+- Pillow

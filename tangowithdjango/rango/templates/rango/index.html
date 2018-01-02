@@ -8,8 +8,6 @@
         <ul>
             {% for c in categories %}
                 <li><a href="{% url 'rango:category' c.slug %}">{{ c.name }}</a>
-                    &nbsp;<input type="button" id="like" title="like it" value="like" data_catid="{{ c.id }}">
-                    &nbsp;<div id="like_count">{{ c.likes }} likes</div>
                 </li>
             {% endfor %}
         </ul>

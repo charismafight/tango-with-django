@@ -3,6 +3,13 @@
     Category
 {% endblock %}
 {% block body_block %}
+    <h2>{{ category.name }}</h2>
+    {% if user.is_authenticated %}
+        <button id="like" title="like it" data_catid="{{ category.id }}">
+            <span class="glyphicon glyphicon-thumbs-up">Like</span>
+        </button>
+        <span id="like_count">{{ category.likes }} likes</span>
+    {% endif %}
     <form class="form-inline mt-2 mt-md-0" id="user_form" method="post"
           action="{% url 'rango:category' category.slug %}">
         {% csrf_token %}
@@ -11,6 +18,7 @@
                id="query" name="query">
         <button class="btn btn-outline-success my-2 my-sm-0" name="submit" type="submit">Search</button>
     </form>
+    <br>
     <ul>
         {% for p in pages %}
             <li><a href="{% url 'rango:goto' %}?page_id={{ p.id }}">{{ p.title }}</a></li>
