@@ -173,3 +173,22 @@ def like_category(request):
         return HttpResponse(current_category.likes)
     else:
         return HttpResponse("ERROR")
+
+
+def get_category_list(max_results=0, starts_with=''):
+    result = []
+    if starts_with:
+        result = Category.objects.filter(name__isstartswith=starts_with).order_by('-likes')[:5]
+    else:
+        result = Category.objects.order_by('-likes')[:5]
+
+    return result[:max_results]
+
+
+def suggestion_category(request):
+    starts_with = ''
+    if request.method == "GET":
+        starts_with = request.GET.get("starts_with")
+        print(starts_with)
+    result = get_category_list(5, starts_with)
+    return render(request, 'rango/cats.html', {"cats": result})
