@@ -176,9 +176,8 @@ def like_category(request):
 
 
 def get_category_list(max_results=0, starts_with=''):
-    result = []
     if starts_with:
-        result = Category.objects.filter(name__isstartswith=starts_with).order_by('-likes')[:5]
+        result = Category.objects.filter(name__startswith=starts_with).order_by('-likes')[:5]
     else:
         result = Category.objects.order_by('-likes')[:5]
 
