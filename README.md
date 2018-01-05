@@ -24,3 +24,4 @@ Technologies and Services
 #### Dependencies
 - [PIL](http://pythonware.com/products/pil/)
 - Pillow
+- [django-registration](https://github.com/ubernostrum/django-registration/)
